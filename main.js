@@ -1,25 +1,73 @@
-// Compare the users choice and the computers choice and update the score
-function playRound(humanChoice, computerChoice) {
-  humanChoice = humanChoice.toLowerCase();
+// Main function = play five rounds of the game and declare a winner based on scores
+function playGame() {
+  // Compare the users choice and the computers choice and update the score
+  function playRound(humanChoice, computerChoice) {
+    humanChoice = humanChoice.toLowerCase();
 
-  // Check if the choices are equal and if so it's a draw
-  if (humanChoice === computerChoice) {
-    console.log(`It was a draw! ${humanChoice} == ${computerChoice}`);
-    return;
+    // Check if the choices are equal and if so it's a draw
+    if (humanChoice === computerChoice) {
+      console.log(`That round was a draw! ${humanChoice} == ${computerChoice}`);
+      return;
 
-    // Check for any condition in which the user's choice is winning and increment their score
-  } else if (
-    (humanChoice === "rock" && computerChoice === "scissors") ||
-    (humanChoice === "paper" && computerChoice === "rock") ||
-    (humanChoice === "scissors" && computerChoice === "paper")
-  ) {
-    console.log(`You won! ${humanChoice} beats ${computerChoice}`);
-    humanScore++;
+      // Check for any condition in which the user's choice is winning and increment their score
+    } else if (
+      (humanChoice === "rock" && computerChoice === "scissors") ||
+      (humanChoice === "paper" && computerChoice === "rock") ||
+      (humanChoice === "scissors" && computerChoice === "paper")
+    ) {
+      console.log(
+        `You won that round! ${humanChoice} beats ${computerChoice}.`
+      );
+      humanScore++;
 
-    // If the user did not win and it is not a draw then the computer must have won
-  } else {
-    console.log(`You lost! ${humanChoice} loses to ${computerChoice}`);
-    computerScore++;
+      // If the user did not win and it is not a draw then the computer must have won
+    } else {
+      console.log(
+        `You lost that round! ${humanChoice} loses to ${computerChoice}.`
+      );
+      computerScore++;
+    }
+
+    // Print the overall game score if it is not the final round
+    if (!isFinalRound) {
+      console.log(
+        `The score is now You[${humanScore}] - Opponent[${computerScore}]`
+      );
+    }
+  }
+
+  // Declare scores and the number of rounds to play
+  const NUM_OF_ROUNDS = 5;
+  let humanScore = 0;
+  let computerScore = 0;
+  let isFinalRound = false;
+
+  for (let i = 0; i < NUM_OF_ROUNDS; i++) {
+    // Get the choice from the user and computer
+    const humanChoice = getHumanChoice();
+    const computerChoice = getComputerChoice();
+
+    // Check if the final round is coming up and flag it
+    if (NUM_OF_ROUNDS - i === 1) {
+      isFinalRound = true;
+    }
+
+    playRound(humanChoice, computerChoice);
+  }
+
+  // Compare the scores and declare a winner or draw
+  if (humanScore === computerScore) {
+    console.log(
+      `This game is a draw ( ͡° ͜ʖ ͡°) You[${humanScore}] - Opponent[${computerScore}]`
+    );
+  } else if (humanScore > computerScore) {
+    console.log(
+      `You won this game! ヽ༼ຈل͜ຈ༽ﾉ You[${humanScore}] - Opponent[${computerScore}]`
+    );
+  } else if (computerScore > humanScore) {
+    console.log(
+      `You lost this game! (~_~;) You[${humanScore}] - Opponent[${computerScore}]`
+    );
   }
 }
 
@@ -53,9 +101,7 @@ function getRandomInt(min, max) {
 }
 
 // Main Loop
-let humanScore = 0;
-let computerScore = 0;
-
+playGame();
 // Randomness Testing //
 
 // Initialize result counts
