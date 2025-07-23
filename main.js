@@ -27,13 +27,6 @@ function playGame() {
       );
       computerScore++;
     }
-
-    // Print the overall game score if it is not the final round
-    if (!isFinalRound) {
-      console.log(
-        `The score is now You[${humanScore}] - Opponent[${computerScore}]`
-      );
-    }
   }
 
   // Declare scores and the number of rounds to play
@@ -46,27 +39,21 @@ function playGame() {
     // Get the choice from the user and computer
     const humanChoice = getHumanChoice();
     const computerChoice = getComputerChoice();
-
-    // Check if the final round is coming up and flag it
-    if (NUM_OF_ROUNDS - i === 1) {
-      isFinalRound = true;
-    }
-
     playRound(humanChoice, computerChoice);
   }
 
   // Compare the scores and declare a winner or draw
   if (humanScore === computerScore) {
     console.log(
-      `This game is a draw ( ͡° ͜ʖ ͡°) You[${humanScore}] - Opponent[${computerScore}]`
+      `\nThis game is a draw ( ͡° ͜ʖ ͡°) You[${humanScore}] - Opponent[${computerScore}]`
     );
   } else if (humanScore > computerScore) {
     console.log(
-      `You won this game! ヽ༼ຈل͜ຈ༽ﾉ You[${humanScore}] - Opponent[${computerScore}]`
+      `\nYou won this game! ヽ༼ຈل͜ຈ༽ﾉ You[${humanScore}] - Opponent[${computerScore}]`
     );
   } else if (computerScore > humanScore) {
     console.log(
-      `You lost this game! (~_~;) You[${humanScore}] - Opponent[${computerScore}]`
+      `\nYou lost this game! (~_~;) You[${humanScore}] - Opponent[${computerScore}]`
     );
   }
 }
