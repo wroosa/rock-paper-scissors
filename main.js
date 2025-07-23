@@ -1,7 +1,32 @@
+// Compare the users choice and the computers choice and update the score
+function playRound(humanChoice, computerChoice) {
+  humanChoice = humanChoice.toLowerCase();
+
+  // Check if the choices are equal and if so it's a draw
+  if (humanChoice === computerChoice) {
+    console.log(`It was a draw! ${humanChoice} == ${computerChoice}`);
+    return;
+
+    // Check for any condition in which the user's choice is winning and increment their score
+  } else if (
+    (humanChoice === "rock" && computerChoice === "scissors") ||
+    (humanChoice === "paper" && computerChoice === "rock") ||
+    (humanChoice === "scissors" && computerChoice === "paper")
+  ) {
+    console.log(`You won! ${humanChoice} beats ${computerChoice}`);
+    humanScore++;
+
+    // If the user did not win and it is not a draw then the computer must have won
+  } else {
+    console.log(`You lost! ${humanChoice} loses to ${computerChoice}`);
+    computerScore++;
+  }
+}
+
 // Prompt the user for a string input of 'rock', 'paper', or 'scissors'
 function getHumanChoice() {
   // Assume the user will always input a valid string
-  return prompt("Please select 'rock', 'paper', or 'scissors':");
+  return prompt("Please select 'Rock', 'Paper', or 'Scissors':");
 }
 
 // Generate a string between 'rock', 'paper', and 'scissors' at random
@@ -26,6 +51,10 @@ function getRandomInt(min, max) {
   */
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+// Main Loop
+let humanScore = 0;
+let computerScore = 0;
 
 // Randomness Testing //
 
