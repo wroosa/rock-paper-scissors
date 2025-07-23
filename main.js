@@ -1,4 +1,4 @@
-// Main function = play five rounds of the game and declare a winner based on scores
+// Main function that plays five rounds of the game and declare a winner based on scores
 function playGame() {
   // Compare the users choice and the computers choice and update the score
   function playRound(humanChoice, computerChoice) {
@@ -35,8 +35,8 @@ function playGame() {
   let computerScore = 0;
   let isFinalRound = false;
 
+  // Play five rounds
   for (let i = 0; i < NUM_OF_ROUNDS; i++) {
-    // Get the choice from the user and computer
     const humanChoice = getHumanChoice();
     const computerChoice = getComputerChoice();
     playRound(humanChoice, computerChoice);
