@@ -1,72 +1,68 @@
-// Main function that plays five rounds of the game and declare a winner based on scores
-function playGame() {
-  // Compare the users choice and the computers choice and update the score
-  function playRound(humanChoice, computerChoice) {
-    humanChoice = humanChoice.toLowerCase();
+const SCORE_CAP = 5;
+let humanScore = 0;
+let computerScore = 0;
+const rockButton = document.querySelector("#rock-button");
+const paperButton = document.querySelector("#paper-button");
+const scissorsButton = document.querySelector("#scissors-button");
+const scoreBoard = document.querySelector("#scoreboard");
 
-    // Check if the choices are equal and if so it's a draw
-    if (humanChoice === computerChoice) {
-      console.log(`That round was a draw! ${humanChoice} == ${computerChoice}`);
-      return;
+rockButton.addEventListener("click", () => {
+  playRound("rock", getComputerChoice());
+});
 
-      // Check for any condition in which the user's choice is winning and increment their score
-    } else if (
-      (humanChoice === "rock" && computerChoice === "scissors") ||
-      (humanChoice === "paper" && computerChoice === "rock") ||
-      (humanChoice === "scissors" && computerChoice === "paper")
-    ) {
-      console.log(
-        `You won that round! ${humanChoice} beats ${computerChoice}.`
-      );
-      humanScore++;
+paperButton.addEventListener("click", () => {
+  playRound("paper", getComputerChoice());
+});
 
-      // If the user did not win and it is not a draw then the computer must have won
+scissorsButton.addEventListener("click", () => {
+  playRound("scissors", getComputerChoice());
+});
+
+function playRound(humanChoice, computerChoice) {
+  // Check if the choices are equal and if so it's a draw
+
+  if (humanChoice === computerChoice) {
+    scoreBoard.innerHTML = `That round was a draw.<br>The Score is now ${humanScore} - ${computerScore}`;
+
+    // Check for any condition in which the user's choice is winning and increment their score
+  } else if (
+    (humanChoice === "rock" && computerChoice === "scissors") ||
+    (humanChoice === "paper" && computerChoice === "rock") ||
+    (humanChoice === "scissors" && computerChoice === "paper")
+  ) {
+    if (++humanScore === SCORE_CAP) {
+      endGame("human");
     } else {
-      console.log(
-        `You lost that round! ${humanChoice} loses to ${computerChoice}.`
-      );
-      computerScore++;
+      updateScoreBoard("You won that round!");
     }
-  }
 
-  // Declare scores and the number of rounds to play
-  const NUM_OF_ROUNDS = 5;
-  let humanScore = 0;
-  let computerScore = 0;
-  let isFinalRound = false;
-
-  // Play five rounds
-  for (let i = 0; i < NUM_OF_ROUNDS; i++) {
-    const humanChoice = getHumanChoice();
-    const computerChoice = getComputerChoice();
-    playRound(humanChoice, computerChoice);
-  }
-
-  // Compare the scores and declare a winner or draw
-  if (humanScore === computerScore) {
-    console.log(
-      `\nThis game is a draw ( ͡° ͜ʖ ͡°) You[${humanScore}] - Opponent[${computerScore}]`
-    );
-  } else if (humanScore > computerScore) {
-    console.log(
-      `\nYou won this game! ヽ༼ຈل͜ຈ༽ﾉ You[${humanScore}] - Opponent[${computerScore}]`
-    );
-  } else if (computerScore > humanScore) {
-    console.log(
-      `\nYou lost this game! (~_~;) You[${humanScore}] - Opponent[${computerScore}]`
-    );
+    // If the user did not win and it is not a draw then the computer must have won
+  } else {
+    if (++computerScore === SCORE_CAP) {
+      endGame("computer");
+    } else {
+      updateScoreBoard("You lost that round!");
+    }
   }
 }
 
-// Prompt the user for a string input of 'rock', 'paper', or 'scissors'
-function getHumanChoice() {
-  // Assume the user will always input a valid string
-  return prompt("Please select 'Rock', 'Paper', or 'Scissors':");
+function endGame(winner) {
+  if (winner === "human") {
+    scoreBoard.innerHTML = `You won this game! ヽ༼ຈل͜ຈ༽ﾉ<br>The score was ${humanScore} - ${computerScore}.<br>Select an option to start a new game.`;
+  } else {
+    scoreBoard.innerHTML = `You lost this game! (~_~;)<br>The score was ${humanScore} - ${computerScore}.<br>Select an option to start a new game.`;
+  }
+  humanScore = 0;
+  computerScore = 0;
+}
+
+function updateScoreBoard(message) {
+  scoreBoard.innerHTML = `${message}<br>The score is now ${humanScore} - ${computerScore}.`;
 }
 
 // Generate a string between 'rock', 'paper', and 'scissors' at random
 function getComputerChoice() {
-  let randomNum = getRandomInt(1, 3);
+  const randomNum = getRandomInt(1, 3);
   if (randomNum === 1) {
     return "scissors";
   } else if (randomNum === 2) {
@@ -87,8 +83,6 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// Main Loop
-playGame();
 // Randomness Testing //
 
 // Initialize result counts
